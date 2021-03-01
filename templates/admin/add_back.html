@@ -1,0 +1,215 @@
+{% extends 'admin/dash_base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-default">
+
+                <div class="card-header card-header-border-bottom">
+                    <h2>Add New Product</h2>
+                </div>
+
+                <div class="card-body">
+                    <form action="/add_product/" method="POST" enctype="multipart/form-data" >
+
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Product Display Name</label>
+                            <input name="name" type="text" class="form-control" id="exampleFormControlInput1"
+                                placeholder="Enter Product Display Name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlPassword">Old Price</label>
+                            <input name="old_price" type="number"  class="form-control" id="exampleFormControlPassword"
+                                placeholder="Old Price">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlPassword">New Price</label>
+                            <input name="new_price" type="number" min = "1" class="form-control" id="exampleFormControlPassword"
+                                placeholder="New Price">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Short Description </label>
+                            <textarea name="short" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Long Description </label>
+                            <textarea name="long" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlPassword">Tags</label>
+                            <input name="tags" type="text" class="form-control" id="exampleFormControlPassword"
+                                placeholder="Tags">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlPassword">Stocks Available</label>
+                            <input name="stocks" type="number" class="form-control" id="exampleFormControlPassword"
+                                placeholder="Stocks">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Categories</label>
+                            <select name="categories" multiple class="form-control" id="exampleFormControlSelect2">
+                                
+                                {% for item in cat %}
+                                    <option value = "{{item.category_id}}">{{item.cat_name}}</option>
+                                {% endfor %}
+
+                               
+                            </select>
+                        </div>
+
+                    
+
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Images</label>
+                            <input name="images" type="file" multiple accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+
+                        <div class="form-footer pt-4 pt-5 mt-4 border-top">
+                            <button type="submit" class="btn btn-primary btn-default">Submit</button>
+                            <button type="reset" class="btn btn-secondary btn-default">Cancel</button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+        <div class="col-lg-6">
+
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>Add New Category</h2>
+                </div>
+                <div class="card-body">
+                    <form action="/add_cat/" method="POST" enctype="multipart/form-data" >
+
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">New Category Name</label>
+                            <input name="name" type="text" class="form-control" id="exampleFormControlInput1"
+                                placeholder="Enter New Category Name"><br>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Upload Category Image</label>
+                            <input name="img" type="file" multiple accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+
+                        <div class="form-footer pt-4 pt-5 mt-4 border-top">
+                            <button type="submit" class="btn btn-primary btn-default">Submit</button>
+                            <button type="reset" class="btn btn-secondary btn-default">Cancel</button>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>Search Product</h2>
+                </div>
+
+                <div class="card-body">
+                    <form action="/search_product/" method="POST" enctype="multipart/form-data" >
+
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Enter Product Name / ID / Category</label>
+                            <input name="q" type="text" class="form-control" id="exampleFormControlInput1"
+                                placeholder="Enter Product Display Name">
+                        </div>
+
+                        <div class="form-footer pt-4 pt-5 mt-4 border-top">
+                            <button type="submit" class="btn btn-primary btn-default">Search</button>
+                            <button type="reset" class="btn btn-secondary btn-default">Cancel</button>
+                        </div><br>
+
+
+                                
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+
+                                            {% if len > 0 %}
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Product ID</th>
+                                                <th scope="col">Product Price</th>
+                                                <th scope="col" >Delete Product</th>
+
+                                            {% else %}
+
+                                                <h3>Empty List</h3>
+                                             
+                                            {% endif %}
+
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for item in search %}
+
+                                            {% for p in item %}
+                                                <tr>
+                                                    <td><a target="blank" href="/product_details/?pid={{p.pid}}">{{p.name}}</a></td>
+                                                    <td>{{p.pid}}</td>
+                                                    <td>{{p.new_price}}</td>
+                                                    <td>
+                                                        <form action="/delete_product/" method="POST" >
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="pid" value="{{p.pid}}" />
+                                                            <input class="mb-1 btn btn-outline-danger" type="submit" value="Delete">
+                                                        </form>
+
+                                                        <form action="/edit_product/" method="GET" >
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="pid" value="{{p.pid}}" />
+                                                            <input class="mb-1 btn btn-outline-danger" type="submit" value="Edit">
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

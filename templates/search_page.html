@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block navbar %}
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+        </ol>
+    </div>
+</nav>
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="modal fade modal-quick-view" id="quickModal" tabindex="-1" role="dialog" aria-labelledby="quickModal" aria-hidden="true">
+    
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <div class="pm-product-details">
+                
+                <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="row">
+                    <!-- Blog Details Image Block -->
+                    <div class="col-md-6">
+                        <div class="image-block">
+                            <!-- Zoomable IMage -->
+                            <img id="zoom_03" src="image/product/product-details/product-details-1.jpg"
+                                data-zoom-image="image/product/product-details/product-details-1.jpg" alt="" />
+
+                            <!-- Product Gallery with Slick Slider -->
+                            <div id="product-view-gallery" class="elevate-gallery">
+                                <!-- Slick Single -->
+                                <a href="#" class="gallary-item"
+                                    data-image="image/product/product-details/product-details-1.jpg"
+                                    data-zoom-image="image/product/product-details/product-details-1.jpg">
+                                    <img src="image/product/product-details/product-details-1.jpg" alt="" />
+                                </a>
+                                <!-- Slick Single -->
+                                <a href="#" class="gallary-item"
+                                    data-image="image/product/product-details/product-details-2.jpg"
+                                    data-zoom-image="image/product/product-details/product-details-2.jpg">
+                                    <img src="image/product/product-details/product-details-2.jpg" alt="" />
+                                </a>
+                                <!-- Slick Single -->
+                                <a href="#" class="gallary-item"
+                                    data-image="image/product/product-details/product-details-3.jpg"
+                                    data-zoom-image="image/product/product-details/product-details-3.jpg">
+                                    <img src="image/product/product-details/product-details-3.jpg" alt="" />
+                                </a>
+                                <!-- Slick Single -->
+                                <a href="#" class="gallary-item"
+                                    data-image="image/product/product-details/product-details-4.jpg"
+                                    data-zoom-image="image/product/product-details/product-details-4.jpg">
+                                    <img src="image/product/product-details/product-details-4.jpg" alt="" />
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-4 mt-lg-0">
+                        <div class="description-block">
+                            <div class="header-block">
+                                <h3>Diam vel neque</h3>
+                            </div>
+                            <!-- Price -->
+                            <p class="price"><span class="old-price">250$</span>300$</p>
+                            <!-- Rating Block -->
+                            <div class="rating-block d-flex  mt--10 mb--15">
+                                <p class="rating-text"><a href="#comment-form">See all features</a></p>
+                            </div>
+                            <!-- Blog Short Description -->
+                            <div class="product-short-para">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est
+                                    tristique auctor. Donec non est at libero vulputate rutrum.
+                                </p>
+                            </div>
+                            <div class="status">
+                                <i class="fas fa-check-circle"></i>300 IN STOCK
+                            </div>
+                            <!-- Amount and Add to cart -->
+                            <form action="https://demo.hasthemes.com/petmark-v5/petmark/" class="add-to-cart">
+                                <div class="count-input-block">
+                                    <input type="number" class="form-control text-center" value="1">
+                                </div>
+                                <div class="btn-block">
+                                    <a href="#" class="btn btn-rounded btn-outlined--primary">Add to cart</a>
+                                </div>
+                            </form>
+                            <!-- Sharing Block 2 -->
+                            <div class="share-block-2 mt--30">
+                                <h4>SHARE THIS PRODUCT</h4>
+                                <ul class="social-btns social-btns-3">
+                                    <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="#" class="pinterest"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="section-padding shop-page-section">
+    <div class="container">
+        <div class="shop-toolbar mb--30">
+            <div class="row align-items-center">
+                <div class="col-5 col-md-3 col-lg-4">
+                    <!-- Product View Mode -->
+                    <div class="product-view-mode">
+                        <a href="#" class="sortting-btn active" data-target="list "><i class="fas fa-list"></i></a>
+                        <a href="#" class="sortting-btn" data-target="grid"><i class="fas fa-th"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9 col-lg-7 offset-lg-1 mt-3 mt-md-0  pr-md-0">
+                    <div class="sorting-selection">
+                        <div class="row align-items-center pl-md-0 pr-md-0 no-gutters">
+                            <div class="col-sm-6 col-md-7 col-xl-8 d-flex align-items-center justify-content-md-end">
+
+                                <span>Sort By:</span>
+                                <select id="input-sort" class="form-control nice-select sort-select"
+                                    style="display: none;">
+                                    <option value="" selected="selected">Default Sorting</option>
+                                    <option value="">Sort
+                                        By:Name (A - Z)</option>
+                                    <option value="">Sort
+                                        By:Name (Z - A)</option>
+                                    <option value="">Sort
+                                        By:Price (Low &gt; High)</option>
+                                    <option value="">Sort
+                                        By:Price (High &gt; Low)</option>
+                                    <option value="">Sort
+                                        By:Rating (Highest)</option>
+                                    <option value="">Sort
+                                        By:Rating (Lowest)</option>
+                                    <option value="">Sort
+                                        By:Model (A - Z)</option>
+                                    <option value="">Sort
+                                        By:Model (Z - A)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 col-xl-4 col-sm-6 text-sm-right mt-sm-0 mt-3">
+                                <span>
+                                    Showing 1–20 of 52 results
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="shop-product-wrap list with-pagination row border grid-four-column  mr-0 ml-0 no-gutters">
+
+            {% if len == 0 %}
+                <h3>There are no result based on "{{q}}"</h3>
+            {% else %}
+                
+                
+                {% for item in products %}
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="pm-product product-type-list  ">
+                            <a href="/product_details/?pid={{item.data.pid}}" class="image" tabindex="0">
+                                <img src="/media/{{item.thumb.image_id.image_file}}" alt="not found">
+                            </a>
+                            <div class="hover-conents">
+                                <ul class="product-btns">
+                                    <li>
+                                        <form action="/add_wish/" method="POST">
+                                            <input type="hidden" name="pid" value="{{item.data.pid}}" />
+                                            {% csrf_token %}
+                                            <button type="submit"  tabindex="0"><i class="ion-ios-heart-outline"></i></button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form  method="POST" action="/add_compare/">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="pid" value="{{item.data.pid}}" >
+                                            <button type="submit" tabindex="0"><i class="ion-ios-shuffle"></i></button>
+                                        </form>
+                                    </li>
+                                    <!-- <li>
+                                        <button href="#" data-toggle="modal" data-target="#quickModal" tabindex="0"><i class="ion-ios-search"></i></button>
+                                    </li> -->
+                                </ul>
+                            </div>
+                            <div class="content">
+                                <h3 class="font-weight-500"><a href="/product_details/?pid={{item.data.pid}}">{{item.data.name}}</a></h3>
+                                <div class="price text-red">
+                                    <span class="old">RS {{item.data.old_price}}</span>
+                                    <span>RS {{item.data.new_price}}</span>
+                                </div>
+                                <div class="btn-block grid-btn">
+                                    <form action="/add_to_cart/" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name = "amount" class="form-control text-center" value="1" min="1" >
+                                        <input type="hidden" name="pid" value="{{item.data.pid}}" />
+                                        <button  type="submit" class="btn btn-outlined btn-rounded btn-mid" tabindex="0">Add to
+                                            Cart</button>
+                                    </form>
+                                </div>
+                                <div class="card-list-content ">
+                                    <div class="rating-widget mt--20">
+
+                                        {% if item.ratings > 0 %}
+
+                                            {% for n in num_array %}
+                                                {% if n < item.ratings %}
+                                                    <a href="#" class="single-rating"><i class="fas fa-star"></i></a>
+                                                {% else %}
+                                                    <a href="#" class="single-rating"><i class="far fa-star"></i></a>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% else %}
+                                            <label>0 Reviews</label>
+                                        {% endif %}
+
+                                    </div>
+                                    <article>
+                                        <h3 class="d-none sr-only">Article</h3>
+                                        <p>{{item.data.short_desc}}</p>
+                                    </article>
+                                    <div class="btn-block d-flex">
+
+                                        <form action="/add_to_cart/" method="POST">
+
+                                            {% csrf_token %}
+                                            <input type="hidden" name = "amount" class="form-control text-center" value="1" min="1" >
+                                            <input type="hidden" name="pid" value="{{item.data.pid}}" />
+                                            <button type="submit" class="btn btn-outlined btn-rounded btn-mid" tabindex="0">Add to Cart</button>
+                                        
+                                        </form>&nbsp;&nbsp;
+
+                                        <div class="btn-options">
+
+
+                                            <form action="/add_wish/" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="pid" value="{{item.data.pid}}" >
+                                                <button  type="submit" ><i class="ion-ios-heart-outline"></i>&nbsp; Add to Wishlist</button>
+                                            </form>&nbsp;&nbsp;
+
+                                            <form  method="POST" action="/add_compare/">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="pid" value="{{item.data.pid}}" >
+                                                <button type="submit" ><i class="ion-ios-shuffle"></i>&nbsp; Add to Compare</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+
+
+
+        </div>
+        <!-- <div class="mt--30">
+            <div class="pagination-widget">
+                <div class="site-pagination">
+                    <a href="#" class="single-pagination">|&lt;</a>
+                    <a href="#" class="single-pagination">&lt;</a>
+                    <a href="#" class="single-pagination active">1</a>
+                    <a href="#" class="single-pagination">2</a>
+                    <a href="#" class="single-pagination">&gt;</a>
+                    <a href="#" class="single-pagination">&gt;|</a>
+                </div>
+            </div>
+
+        </div> -->
+    </div>
+</main>
+
+{% endblock content %}

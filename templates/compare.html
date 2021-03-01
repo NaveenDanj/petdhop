@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block navbar %}
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Compare</li>
+        </ol>
+    </div>
+</nav>
+{% endblock navbar %}
+
+
+
+
+{% block content %}
+<div class="compare_area sp-inner-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                		
+                        
+                    <!-- Compare Table -->
+                    <div class="compare-table table-responsive">
+
+                        {% if len == 0 %}
+                            <h3>Compare list empty.</h3>
+                        {% else %}
+                            <table class="table mb-0">
+                                <tbody>
+
+
+                                    <tr>
+                                        <td class="first-column">Product</td>
+
+                                        {% for item in products %}
+
+                                            <td class="product-image-title">
+                                                <a href="/product_details/?pid={{item.data.product_id.pid}}" class="image"><img style="max-height: 300px;" src="/media/{{item.image.image_id.image_file}}" alt="Compare Product"></a>
+                                                <a href="#" class="category">
+                                                    {% for cat in item.cats %}
+                                                        {{cat.cat_id.cat_name}}
+                                                    {% endfor %}
+                                                </a>
+                                                <a href="/product_details/?pid={{item.data.product_id.pid}}" class="title">{{item.data.product_id.name}}</a>
+                                            </td>
+
+                                        {% endfor %}
+
+                                        <!-- <td class="product-image-title">
+                                            <a href="#" class="image"><img src="image/product/home-1/product-1.jpg" alt="Compare Product"></a>
+                                            <a href="#" class="category">Glasses</a>
+                                            <a href="#" class="title">Rinosin Glasses</a>
+                                        </td>
+
+                                        <td class="product-image-title">
+                                            <a href="#" class="image"><img src="image/product/home-1/product-2.jpg" alt="Compare Product"></a>
+                                            <a href="#" class="category">Glasses</a>
+                                            <a href="#" class="title">Macro Melodi</a>
+                                        </td>
+
+                                        <td class="product-image-title">
+                                            <a href="#" class="image"><img src="image/product/home-1/product-3.jpg" alt="Compare Product"></a>
+                                            <a href="#" class="category">Glasses</a>
+                                            <a href="#" class="title">Oakley Sunglasses</a>
+                                        </td> -->
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td class="first-column">Description</td>
+
+                                        {% for item in products %}
+                                            <td class="pro-desc"><p>{{item.data.product_id.short_desc}}</p></td>
+                                        {% endfor %}
+
+
+                                        <!-- <td class="pro-desc"><p>Eye glasses a
+                                            re very important for thos whos have some difficult in their eye to see every hing clearly and perfectly</p></td>
+                                        <td class="pro-desc"><p>Eye glasses are very important for thos whos have some difficult in their eye to see every hing clearly and perfectly</p></td> -->
+                                    </tr>
+
+                                    <tr>
+                                        <td class="first-column">Price</td>
+
+                                        {% for item in products %}
+                                            <td class="pro-price">RS {{item.data.product_id.new_price}}</td>
+                                        {% endfor %}
+
+                                    </tr>
+
+                                    
+
+                                    <tr>
+                                        <td class="first-column">Stock</td>
+
+                                        {% for item in products %}
+                                            <td class="pro-stock">{{item.data.product_id.stocks}}</td>
+                                        {% endfor %}
+
+                                        
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="first-column">Add to cart</td>
+
+                                        {% for item in products %}
+
+
+                                            <td class="pro-addtocart">
+                                                <form action="/add_to_cart/" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name = "amount" class="form-control text-center" value="1" min="1" >
+                                                    <input type="hidden" name="pid" value="{{item.data.product_id.pid}}" />
+                                                    <button class="add-to-cart" type="submit" >
+                                                        <i class="fas fa-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </button>
+                                                </form>
+                                            </td>
+
+
+                                        {% endfor %}
+
+                                    </tr>
+
+                                    <tr>
+                                        <td class="first-column">Delete</td>
+
+                                        {% for item in products %}
+                                        <form action="/delete_compare/" method="POST">
+                                            {% csrf_token %}
+                                            <td class="pro-remove">
+                                                <input type="hidden" name="compare_id" value="{{item.data.compare_id}}" >
+                                                <button type="submit" ><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </form>
+                                        {% endfor %}
+
+                                        <!-- <td class="pro-remove"><button><i class="fas fa-trash"></i></button></td>
+                                        <td class="pro-remove"><button><i class="fas fa-trash"></i></button></td>
+                                        <td class="pro-remove"><button><i class="fas fa-trash"></i></button></td> -->
+                                    </tr>
+
+                                    <tr>
+                                        <td class="first-column">Rating</td>
+
+                                        {% for item in products %}
+
+                                            <td class="pro-ratting">
+
+                                                {% if item.ratings > 0 %}
+
+                                                    {% for n in num_array %}
+                                                        {% if n < item.ratings %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star-o"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                {% else %}
+                                                    <label>0 Reviews</label>
+                                                {% endif %}
+
+                                            </td>
+
+
+                                        {% endfor %}
+
+                                        
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        {% endif %}
+
+
+                    </div>
+                                    
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

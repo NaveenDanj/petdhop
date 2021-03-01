@@ -1,0 +1,87 @@
+{% extends 'admin/dash_base.html' %}
+
+{% load static %}
+
+
+
+
+{% block content %}
+<div class="content">
+    <div class="col-lg-12">
+        <div class="card card-default">
+            <div class="card-header card-header-border-bottom">
+                <h2>Order Details -
+
+                    {% if order.status == 'Pending' %}
+                        <span class="badge badge-warning">PENDING</span> <br><br>
+
+
+                        <div style="display: flex; ">
+                            <form style="margin-right:10px;" action="/mark_as_completed/" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="order_id" value="{{order.order_id}}" >
+                                <input type="submit" class="btn btn-outline-info" value="Mark as Completed">
+                            </form>
+
+                            <form action="/cancel_order/" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="order_id" value="{{order.order_id}}" >
+                                <input type="submit" class="btn btn-outline-danger" value="Cancel Order">
+                            </form>
+                        </div>
+
+                        
+
+                    {% elif order.status == 'Canceled' %}
+                        <span class="badge badge-danger">CANCELED</span>
+                    
+                    {% elif order.status == 'Completed' %}
+                        <span class="badge badge-success">COMPLETED</span>
+
+                    {% endif %}
+                </h2>
+            </div>
+            <div class="card-body">
+                <p class="mb-5">
+                    Order Details About Order ID {{order.order_id}}<br><br>
+                    Ordered By - {{order.user_id.username}}<br>
+                    Order Placed At - {{order.order_date}}<br>
+                    Order ID  - {{order.order_id}}<br><br>
+
+                    Customer Name - {{account.fname}} {{account.lname}}<br>
+                    Customer Address - {{account.address}}<br>
+                    Customer Phone Number - {{account.mobile_number}}<br>
+                    Customer Town - {{account.town}}<br>
+                    Customer State - {{account.state}}<br>
+                    Customer Postal Code - {{account.zipcode}}<br>
+                </p>
+
+                <div class="list-group">
+
+                    {% for item in order_products %}
+                        
+                        <div class="media py-3 align-items-center justify-content-between">
+                            <div class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+                                <i class="mdi mdi-cart-outline font-size-20"></i>
+
+                            </div>
+                            <div class="media-body pr-3 ">
+                                <a class="mt-0 mb-1 font-size-15 text-dark" href="#">{{item.product_id.name}}</a>
+                                <p >{{item.product_id.short_desc}}<br>
+                                    Single Unit Price - {{item.product_id.new_price}} LKR<br>
+                                    Amount - {{item.amount}}<br>
+                                    Product ID - <a target="_blank" href="/product_details/?pid={{item.product_id.pid}}">{{item.product_id.pid}}</a>
+                                </p>
+                            </div>
+                            <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i> {{order.order_date}}</span>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

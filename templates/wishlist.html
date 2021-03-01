@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block navbar %}
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+    </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="cart_area sp-inner-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- <form action="https://demo.hasthemes.com/petmark-v5/petmark/">				 -->
+                    <!-- Cart Table -->
+                    <div class="cart-table table-responsive">
+
+                        {% if wishlist_len > 0 %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for item in wish_list %}
+                                        <tr>
+                                            <td class="pro-thumbnail"><a target="_blank" href="/product_details/?pid={{item.data.product_id.pid}}"><img src="/media/{{item.thumb.image_id.image_file}}" alt="Product"></a></td>
+                                            <td class="pro-title"><a target="_blank" href="/product_details/?pid={{item.data.product_id.pid}}">{{item.data.product_id.name}}</a></td>
+                                            <td class="pro-price"><span>RS {{item.data.product_id.new_price}}</span></td>
+                                            <td class="pro-remove">
+                                                <form action="/del_wish/" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="wid" value = "{{item.data.wish_id}}" >
+                                                    <input type="hidden" name="pid" value = "{{item.data.product_id.pid}}" >
+                                                    <button type="submit"><i class="far fa-trash-alt"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    <!-- <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-1.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Rinosin Glasses</a></td>
+                                        <td class="pro-price"><span>$395.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$395.00</span></td>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-2.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Silacon Glasses</a></td>
+                                        <td class="pro-price"><span>$275.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$550.00</span></td>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-3.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Easin Glasses</a></td>
+                                        <td class="pro-price"><span>$295.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$295.00</span></td>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-4.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Macrox Glasses</a></td>
+                                        <td class="pro-price"><span>$220.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$220.00</span></td>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                    </tr> -->
+
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <h3>Wishlist is Empty...</h3>
+                        {% endif %}
+                    </div>
+                    
+                <!-- </form>	 -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

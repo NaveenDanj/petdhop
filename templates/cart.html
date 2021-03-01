@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block navbar  %}
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+    <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+            </ol>
+    </div>
+</nav>
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="cart_area cart-area-padding sp-inner-page--top">
+    <div class="container">
+        <div class="page-section-title">
+            <h1>SHOPPING CART</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                    <!-- Cart Table -->
+                    <div class="cart-table table-responsive mb--40">
+
+                        {% if cart_items_length == 0 %}
+                            <h3>Cart is Empty</h3>
+                        {% else %}
+                            <table class="table">
+                                <!-- Head Row -->
+                                <thead>
+                                    <tr>
+                                        <th class="pro-remove"></th>
+                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-quantity">Quantity</th>
+                                        <th class="pro-subtotal">Total</th>
+
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <!-- Product Row -->
+                                    
+                                    {% for item in cart_ %}
+                                        <tr>
+                                            <form action="/del_item_cart/" method="POST" >
+                                                {% csrf_token %}
+                                                <input type="hidden" name="cart_id" value="{{item.id}}" >
+                                                <td class="pro-remove"><button type="submit"><i class="far fa-trash-alt"></i></button></td>
+                                            </form>
+
+                                            <td class="pro-thumbnail"><a href="#"><img src="{% static 'image/product/home-1/product-1.jpg' %}" alt="Product"></a></td>
+                                            <td class="pro-title"><a href="#">{{item.product_id.name}}</a></td>
+                                            <td class="pro-price"><span>RS {{item.product_id.new_price}}</span></td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty">
+                                                    <div class="count-input-block">
+                                                        <form action="/update_cart/" method="POST" >
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="product_id" value="{{item.product_id.pid}}" >
+                                                            <input type="number" min = "0"  name="amount" class="form-control text-center" value="{{item.amount}}">
+                                                            <button  type="submit"><i class="fa fa-upload"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="pro-subtotal"><span>RS {{item.total}}</span></td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    
+
+                                    <!-- <tr>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-1.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Rinosin Glasses</a></td>
+                                        <td class="pro-price"><span>$395.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$395.00</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="pro-remove"><a href="#"><i class="far fa-trash-alt"></i></a></td>
+                                        <td class="pro-thumbnail"><a href="#"><img src="image/product/home-1/product-1.jpg" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">Rinosin Glasses</a></td>
+                                        <td class="pro-price"><span>$395.00</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="pro-qty">
+                                                <div class="count-input-block">
+                                                    <input type="number" class="form-control text-center" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>$395.00</span></td>
+                                    </tr> -->
+                                    
+                                    {% if cart_items_length > 0 %}
+
+                                        <tr>
+                                            <td colspan="6" class="actions">
+
+                                                <!-- <div class="coupon-block">
+                                                    <div class="coupon-text">
+                                                        <label for="coupon_code">Coupon:</label>
+                                                        <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
+                                                    </div>
+                                                    <div class="coupon-btn">
+                                                        <input type="submit" class="btn-black" name="apply_coupon" value="Apply coupon">
+                                                    </div>
+                                                </div> -->
+
+                                                <div class="update-block text-right">
+                                                    <form action="/reset_cart/" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="submit" class="btn-black" name="update_cart" value="Reset cart">
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    
+                                </tbody>
+                            </table>
+                        {% endif %}
+
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-section-2 sp-inner-page--bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 mb--15">
+                <!-- slide Block 5 / Normal Slider -->
+                <div class="cart-block-title">
+                    <h2>YOU MAY BE INTERESTED IN…</h2>
+                </div>
+                <div class="petmark-slick-slider border normal-slider arrow-type-two" data-slick-setting='{
+                        "autoplay": true,
+                        "autoplaySpeed": 3000,
+                        "slidesToShow": 3,
+                        "arrows": true
+                }'
+                data-slick-responsive='[
+                        {"breakpoint":991, "settings": {"slidesToShow": 2} },
+                        {"breakpoint":768, "settings": {"slidesToShow": 1} }
+                ]'>
+
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slide">
+                        <div class="pm-product">
+                            <div class="image">
+                                <a href="product-details.html"><img src="{% static 'image/product/home-1/product-7.jpg' %}" alt=""></a>
+
+                                <span class="onsale-badge">Sale!</span>
+                            </div>
+                            <div class="content">
+                                <h3>Convallis quam sit</h3>
+                                <div class="price text-red">
+                                    <span class="old">$200</span>
+                                    <span>$300</span>
+                                </div>
+                                <div class="btn-block">
+                                    <a href="cart.html" class="btn btn-outlined btn-rounded">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="col-lg-6 col-12 d-flex">
+                <div class="cart-summary">
+                    <div class="cart-summary-wrap">
+                        <h4><span>Cart Summary</span></h4>
+                        <p>Sub Total <span class="text-primary">RS {{sub_total}}</span></p>
+                        <p>Shipping Cost <span class="text-primary">$00.00</span></p>
+                        <h2>Grand Total <span class="text-primary">${{sub_total}}</span></h2>
+                    </div>
+                    <div class="cart-summary-button">
+                        <a href="checkout.html" class="checkout-btn c-btn">Checkout</a>
+                        <!-- <button class="update-btn c-btn">Update Cart</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

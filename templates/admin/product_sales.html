@@ -1,0 +1,89 @@
+{% extends 'admin/dash_base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <!-- Recent Order Table -->
+                <div class="card card-table-border-none" id="recent-orders">
+                    <div class="card-header justify-content-between">
+                        <h2>Full Product Sales </h2>
+                        <!-- <div class="date-range-report ">
+                            <span></span>
+                        </div> -->
+                    </div>
+                    <div class="card-body pt-0 pb-5">
+                        <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th class="d-none d-md-table-cell">Units Left</th>
+                                    <th class="d-none d-md-table-cell">Units Sold</th>
+                                    <th class="d-none d-md-table-cell">Unit Price</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for item in products %}
+                                    <tr>
+                                        <td><a target="_blank" class="text-dark" href="/product_details/?pid={{item.data.pid}}">{{item.data.pid}}</a></td>
+                                        <td>
+                                            <a target="_blank" class="text-dark" href="/product_details/?pid={{item.data.pid}}">{{item.data.name}}</a>
+                                        </td>
+                                        <td class="d-none d-md-table-cell">{{item.data.stocks}} Unit</td>
+                                        <td class="d-none d-md-table-cell">{{item.data.total_sales}}</td>
+                                        <td class="d-none d-md-table-cell">{{item.data.new_price}} LKR</td>
+                                        <td>
+
+                                            {% if item.data.stocks < 10 %}
+
+                                                {% if item.data.stocks == 0 %}
+                                                    <span class="badge badge-danger">Out Of Stocks</span>
+                                                {% else %}
+                                                    <span class="badge badge-warning">Running out</span>
+                                                {% endif %}
+
+                                            {% else %}
+                                                
+                                                <span class="badge badge-success">In Stocks</span>
+
+                                            {% endif %}
+                                            
+                                        </td>
+
+                                        <!-- <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="" role="button"
+                                                    id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="dropdown-recent-order1">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td> -->
+                                        
+                                    </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
